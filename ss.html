@@ -1,14 +1,43 @@
 <head>
-  <title>ss</title>
+  <title>SS</title>
 </head>
 
 <body>
-  <h1>Welcome to Meteor!</h1>
+  {{> loginButtons}}
+  <h1>Create your own SS List!</h1>
+	{{> list }}
+	
+	{{> addPersonForm }}
 
-  {{> hello}}
+	{{> createList}}
+
+	{{> matches}}
 </body>
 
-<template name="hello">
-  <button>Click Me</button>
-  <p>You've pressed the button {{counter}} times.</p>
+<template name="list">
+  <ul>
+  	{{#each person}}
+			<li class="person">{{name}}</li>
+  	{{/each}}
+	</ul>
+</template>
+
+<template name="createList">
+	<p>When you're list is completed: <input type="button" class="matches" value="Create Matches">
+	</p>
+</template>
+
+<template name="matches">
+	<ul>
+		{{#each match}}
+			<li>{{person}} - {{match}}</li>
+		{{/each}}
+	</ul>
+</template>
+
+<template name="addPersonForm">
+	<form>
+		<input type="text" name="person">
+		<input type="submit" value="Add Person">
+	</form>
 </template>

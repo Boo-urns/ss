@@ -1,17 +1,37 @@
-if (Meteor.isClient) {
-  // counter starts at 0
-  Session.setDefault("counter", 0);
+ssList  = new Mongo.Collection('sslist');
+people  = new Mongo.Collection('people');
 
-  Template.hello.helpers({
-    counter: function () {
-      return Session.get("counter");
+if (Meteor.isClient) {
+  Template.list.helpers({
+    person: function(){
+      return people.find();
+    },
+
+  });
+
+  Template.addPersonForm.events({
+    'submit form': function(e) {
+      e.preventDefault();
+      var person = e.target.person;
+      var personName = person.value;
+
+      people.insert({
+        name: personName,
+
+      });
+
+      person.value = '';
     }
   });
 
-  Template.hello.events({
-    'click button': function () {
-      // increment the counter when button is clicked
-      Session.set("counter", Session.get("counter") + 1);
+  Template.createList.events({
+    'click .matches': function(){
+      var list = people.find().fetch();
+      var rSort = list.sort(function() { return 0.5 - Math.random() });
+      console.log(rSort);
+      list.forEach(function(person) {
+        console.log(person.name);
+      })
     }
   });
 }
